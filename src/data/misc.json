@@ -1,0 +1,28 @@
+{
+  "products": [
+    { "id": 1, "name": "Bali Cultural Heritage Tour", "country": "Indonesia", "duration": "3D2N", "type": "Cultural", "pax": "2-15" },
+    { "id": 2, "name": "Komodo Island Adventure", "country": "Indonesia", "duration": "4D3N", "type": "Adventure", "pax": "4-20" },
+    { "id": 3, "name": "Ubud Wellness Retreat", "country": "Indonesia", "duration": "5D4N", "type": "Wellness", "pax": "2-10" },
+    { "id": 4, "name": "Ha Long Bay Cruise", "country": "Vietnam", "duration": "3D2N", "type": "Nature", "pax": "10-30" },
+    { "id": 5, "name": "Hanoi Old Quarter Walk", "country": "Vietnam", "duration": "1D", "type": "Cultural", "pax": "2-20" },
+    { "id": 6, "name": "Ho Chi Minh City History Tour", "country": "Vietnam", "duration": "2D1N", "type": "Cultural", "pax": "2-25" }
+  ],
+  "sales": [
+    { "id": 1, "name": "ICS Company Profile 2026", "type": "PDF", "size": "4.2 MB", "updated": "2026-01-15" },
+    { "id": 2, "name": "Indonesia Destination Deck", "type": "PPTX", "size": "12.8 MB", "updated": "2026-02-20" },
+    { "id": 3, "name": "Vietnam Destination Deck", "type": "PPTX", "size": "10.3 MB", "updated": "2026-03-01" },
+    { "id": 4, "name": "Group Tour Proposal Template", "type": "DOCX", "size": "1.1 MB", "updated": "2026-03-18" },
+    { "id": 5, "name": "ICS Rate Sheet Q2 2026", "type": "XLSX", "size": "890 KB", "updated": "2026-04-05" },
+    { "id": 6, "name": "Partner Agreement Template", "type": "DOCX", "size": "780 KB", "updated": "2026-01-30" }
+  ],
+  "gallery": [
+    { "id": 1, "name": "Bali Rice Terraces", "country": "Indonesia", "tags": ["Nature", "Landscape"], "color": "#4A7C59" },
+    { "id": 2, "name": "Tanah Lot Temple", "country": "Indonesia", "tags": ["Cultural", "Landmark"], "color": "#7C6D4A" },
+    { "id": 3, "name": "Komodo Dragon", "country": "Indonesia", "tags": ["Wildlife", "Adventure"], "color": "#4A5E7C" },
+    { "id": 4, "name": "Ha Long Bay Sunset", "country": "Vietnam", "tags": ["Nature", "Landscape"], "color": "#7C4A4A" },
+    { "id": 5, "name": "Hoi An Lanterns", "country": "Vietnam", "tags": ["Cultural", "Night"], "color": "#7C6A4A" },
+    { "id": 6, "name": "Hanoi Street Food", "country": "Vietnam", "tags": ["Food", "Cultural"], "color": "#4A7C7C" },
+    { "id": 7, "name": "Mount Agung Sunrise", "country": "Indonesia", "tags": ["Nature", "Adventure"], "color": "#5A4A7C" },
+    { "id": 8, "name": "Mekong Delta Boat", "country": "Vietnam", "tags": ["Nature", "Adventure"], "color": "#4A7C5A" }
+  ]
+}

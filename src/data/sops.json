@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "New Staff Onboarding Procedure",
+    "category": "HR",
+    "description": "Step-by-step process for onboarding new employees across all ICS countries.",
+    "version": "v2.1",
+    "lastUpdated": "2026-04-10",
+    "country": "All Countries"
+  },
+  {
+    "id": 2,
+    "title": "Tour Booking Cancellation Policy",
+    "category": "Operations",
+    "description": "Standard procedure for handling tour booking cancellations and refund processing.",
+    "version": "v1.3",
+    "lastUpdated": "2026-03-22",
+    "country": "All Countries"
+  },
+  {
+    "id": 3,
+    "title": "IT Equipment Request Process",
+    "category": "IT",
+    "description": "How to submit and process requests for new IT equipment or software licenses.",
+    "version": "v1.0",
+    "lastUpdated": "2026-02-15",
+    "country": "All Countries"
+  },
+  {
+    "id": 4,
+    "title": "Client Complaint Handling",
+    "category": "Operations",
+    "description": "Process for receiving, escalating, and resolving client complaints.",
+    "version": "v2.0",
+    "lastUpdated": "2026-01-30",
+    "country": "Indonesia"
+  }
+]

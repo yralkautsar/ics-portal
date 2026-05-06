@@ -1,0 +1,44 @@
+{
+  "core": {
+    "label": "ICS Core Global",
+    "flag": "🌐",
+    "folders": [
+      { "name": "Brand Assets", "emoji": "🎨", "fileCount": 12, "access": "All Staff" },
+      { "name": "Sales Materials", "emoji": "📊", "fileCount": 8, "access": "All Staff" },
+      { "name": "Proposal Templates", "emoji": "📋", "fileCount": 5, "access": "All Staff" },
+      { "name": "Business License", "emoji": "📜", "fileCount": 3, "access": "Management Only" },
+      { "name": "HR Documents", "emoji": "👥", "fileCount": 6, "access": "HR & Management Only" },
+      { "name": "IT & System Guides", "emoji": "🛠️", "fileCount": 4, "access": "All Staff" }
+    ]
+  },
+  "countries": [
+    {
+      "code": "ID",
+      "name": "Indonesia",
+      "flag": "🇮🇩",
+      "sub": "ICS HQ · Bali",
+      "folders": [
+        { "name": "Inbound", "emoji": "📥", "fileCount": 9 },
+        { "name": "LE", "emoji": "⚖️", "fileCount": 4 },
+        { "name": "Product", "emoji": "🗺️", "fileCount": 11 },
+        { "name": "Operations", "emoji": "⚙️", "fileCount": 7 },
+        { "name": "Contracts", "emoji": "📄", "fileCount": 5 },
+        { "name": "Image Gallery", "emoji": "🖼️", "fileCount": 43 }
+      ]
+    },
+    {
+      "code": "VN",
+      "name": "Vietnam",
+      "flag": "🇻🇳",
+      "sub": "JD Tours Vietnam",
+      "folders": [
+        { "name": "Inbound", "emoji": "📥", "fileCount": 7 },
+        { "name": "LE", "emoji": "⚖️", "fileCount": 3 },
+        { "name": "Product", "emoji": "🗺️", "fileCount": 8 },
+        { "name": "Operations", "emoji": "⚙️", "fileCount": 5 },
+        { "name": "Contracts", "emoji": "📄", "fileCount": 4 },
+        { "name": "Image Gallery", "emoji": "🖼️", "fileCount": 31 }
+      ]
+    }
+  ]
+}

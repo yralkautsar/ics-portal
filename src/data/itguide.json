@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "title": "How to Connect to VPN",
+    "category": "Network",
+    "content": "Step-by-step guide to connecting to the ICS corporate VPN. Includes Windows and Mac instructions.",
+    "lastUpdated": "2026-04-20"
+  },
+  {
+    "id": 2,
+    "title": "Email Setup on Mobile Devices",
+    "category": "Email",
+    "content": "Configure your ICS Google Workspace email on Android and iOS devices.",
+    "lastUpdated": "2026-03-15"
+  },
+  {
+    "id": 3,
+    "title": "Requesting IT Support",
+    "category": "Support",
+    "content": "How to submit an IT support ticket and what information to include for faster resolution.",
+    "lastUpdated": "2026-02-10"
+  },
+  {
+    "id": 4,
+    "title": "Password Policy & Reset Guide",
+    "category": "Security",
+    "content": "ICS password requirements and step-by-step guide for resetting your Google Workspace password.",
+    "lastUpdated": "2026-01-05"
+  },
+  {
+    "id": 5,
+    "title": "Google Drive & Shared Drive Usage",
+    "category": "Storage",
+    "content": "Guidelines for using Google Drive, uploading files to Shared Drive, and managing folder access.",
+    "lastUpdated": "2026-05-01"
+  }
+]
