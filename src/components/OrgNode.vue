@@ -1,43 +1,21 @@
 <template>
-  <div class="flex flex-col items-center">
+  <div class="node-wrapper">
 
-    <!-- Node Card -->
-    <div
-      :class="[
-        'relative bg-surface border rounded-lg px-4 py-3 text-center min-w-36 max-w-44 cursor-default',
-        isRoot ? 'border-brand shadow-sm' : 'border-border',
-      ]"
-    >
-      <!-- Position badge -->
-      <span :class="['text-xs font-semibold tracking-wider uppercase px-2 py-0.5 rounded mb-2 inline-block', positionTag(node.position)]">
+    <!-- Card -->
+    <div :class="['node-card', isRoot ? 'node-card--root' : '']">
+      <span :class="['position-badge', positionClass(node.position)]">
         {{ node.position }}
       </span>
-      <p class="font-heading font-600 text-xs text-ink leading-tight">{{ node.name }}</p>
-      <p class="text-xs text-ink3 mt-0.5">{{ node.department }}</p>
+      <p class="node-name">{{ node.name }}</p>
+      <p class="node-dept">{{ node.department }}</p>
     </div>
 
     <!-- Children -->
-    <div v-if="children.length" class="flex flex-col items-center">
-      <!-- Vertical line down from parent -->
-      <div class="w-px h-6 bg-ink3"></div>
-
-      <!-- Horizontal connector + children -->
-      <div class="relative flex items-start gap-0">
-        <!-- Horizontal line spanning all children -->
-        <div
-          v-if="children.length > 1"
-          class="absolute top-0 left-0 right-0 h-px bg-ink3"
-          :style="{ left: '50%', transform: 'translateX(-50%)', width: horizontalWidth }"
-        ></div>
-
-        <div
-          v-for="child in children"
-          :key="child.id"
-          class="flex flex-col items-center px-4"
-        >
-          <!-- Vertical line down to child -->
-          <div class="w-px h-6 bg-ink3"></div>
-          <!-- Recurse -->
+    <div v-if="children.length" class="children-section">
+      <div class="connector-down"></div>
+      <div class="children-row">
+        <div v-for="child in children" :key="child.id" class="child-col">
+          <div class="connector-down"></div>
           <OrgNode :node="child" :all-nodes="allNodes" />
         </div>
       </div>
@@ -60,18 +38,117 @@ const children = computed(() =>
   props.allNodes.filter(n => n.reportsTo === props.node.id)
 )
 
-const horizontalWidth = computed(() => {
-  const count = children.value.length
-  if (count <= 1) return '0px'
-  // Approximate: each child column is ~176px wide (min-w-36 + px-4*2)
-  return `${(count - 1) * 176}px`
-})
-
-const positionTag = (pos) => ({
-  'Director': 'bg-ink text-white',
-  'General Manager': 'bg-ink2 text-white',
-  'Executive Manager': 'bg-brand text-white',
-  'Manager': 'bg-brand-pale text-brand',
-  'Supervisor': 'bg-subtle text-ink3',
-}[pos] || 'bg-subtle text-ink3')
+const positionClass = (pos) => ({
+  'Director': 'badge--director',
+  'General Manager': 'badge--gm',
+  'Executive Manager': 'badge--em',
+  'Manager': 'badge--manager',
+  'Supervisor': 'badge--supervisor',
+}[pos] || 'badge--supervisor')
 </script>
+
+<style scoped>
+.node-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Card */
+.node-card {
+  background: #fff;
+  border: 1px solid #EBEBEB;
+  border-radius: 8px;
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 140px;
+  max-width: 160px;
+}
+
+.node-card--root {
+  border-color: #E8630A;
+}
+
+/* Position badge */
+.position-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.badge--director  { background: #1A1A1A; color: #fff; }
+.badge--gm        { background: #4A4A4A; color: #fff; }
+.badge--em        { background: #E8630A; color: #fff; }
+.badge--manager   { background: #FFF5EF; color: #E8630A; }
+.badge--supervisor{ background: #F8F8F8; color: #888; }
+
+.node-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  color: #1A1A1A;
+  line-height: 1.3;
+}
+
+.node-dept {
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* Connectors */
+.connector-down {
+  width: 1px;
+  height: 24px;
+  background: #888;
+  flex-shrink: 0;
+}
+
+/* Children layout */
+.children-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.children-row {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* Horizontal line across all siblings via border-top on child-col */
+.child-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+  border-top: 1px solid #888;
+}
+
+/* First child: line starts from center, goes right */
+.child-col:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.child-col:first-child {
+  border-top-left-radius: 0;
+}
+
+/* Last child: line starts from left, ends at center */
+.child-col:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+/* Single child: no horizontal line needed */
+.child-col:first-child:last-child {
+  border-top: none;
+}
+</style>
