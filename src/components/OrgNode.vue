@@ -19,14 +19,14 @@
     <!-- Children -->
     <div v-if="children.length" class="flex flex-col items-center">
       <!-- Vertical line down from parent -->
-      <div class="w-px h-6 bg-border"></div>
+      <div class="w-px h-6 bg-ink3"></div>
 
       <!-- Horizontal connector + children -->
       <div class="relative flex items-start gap-0">
         <!-- Horizontal line spanning all children -->
         <div
           v-if="children.length > 1"
-          class="absolute top-0 left-0 right-0 h-px bg-border"
+          class="absolute top-0 left-0 right-0 h-px bg-ink3"
           :style="{ left: '50%', transform: 'translateX(-50%)', width: horizontalWidth }"
         ></div>
 
@@ -36,7 +36,7 @@
           class="flex flex-col items-center px-4"
         >
           <!-- Vertical line down to child -->
-          <div class="w-px h-6 bg-border"></div>
+          <div class="w-px h-6 bg-ink3"></div>
           <!-- Recurse -->
           <OrgNode :node="child" :all-nodes="allNodes" />
         </div>

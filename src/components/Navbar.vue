@@ -47,7 +47,7 @@ const navItems = [
   { path: '/it-guide', label: 'IT Guide' },
   { path: '/products', label: 'Product Catalog' },
   { path: '/sales', label: 'Sales Materials' },
-  { path: '/org', label: 'Org Structure' },
+  { path: '/org', label: 'Structure' },
   { path: '/gallery', label: 'Image Gallery' },
 ]
 </script>
