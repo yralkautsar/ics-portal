@@ -2,18 +2,14 @@
   <div class="org-container" ref="containerRef">
 
     <!-- SVG connector lines -->
-    <svg
-      class="org-svg"
-      :width="svgSize.width"
-      :height="svgSize.height"
-    >
-      <line
+    <svg class="org-svg" :width="svgSize.width" :height="svgSize.height">
+      <path
         v-for="(line, i) in lines"
         :key="i"
-        :x1="line.x1" :y1="line.y1"
-        :x2="line.x2" :y2="line.y2"
-        stroke="#888888"
-        stroke-width="1"
+        :d="line.d"
+        fill="none"
+        stroke="#CCCCCC"
+        stroke-width="1.5"
       />
     </svg>
 
@@ -47,7 +43,6 @@ const props = defineProps({
   nodes: { type: Array, required: true },
 })
 
-/* Level order by position title */
 const LEVEL = {
   'Director': 0,
   'General Manager': 1,
@@ -57,7 +52,11 @@ const LEVEL = {
   'Staff': 5,
 }
 
-/* Group nodes into rows by role level, sorted within row by parent order */
+/**
+ * Group nodes into rows by role level.
+ * Within each row, sort by the horizontal index of their parent
+ * in the previous row — this minimizes line crossings.
+ */
 const leveledRows = computed(() => {
   const groups = {}
   props.nodes.forEach(node => {
@@ -65,14 +64,32 @@ const leveledRows = computed(() => {
     if (!groups[lvl]) groups[lvl] = []
     groups[lvl].push(node)
   })
-  return Object.entries(groups)
+
+  const sortedLevels = Object.entries(groups)
     .sort(([a], [b]) => Number(a) - Number(b))
-    .map(([, nodes]) =>
-      nodes.slice().sort((a, b) => (a.reportsTo ?? 0) - (b.reportsTo ?? 0))
-    )
+
+  // Build a map: nodeId -> index within its row
+  const positionMap = {}
+
+  return sortedLevels.map(([, nodes], rowIndex) => {
+    if (rowIndex === 0) {
+      nodes.forEach((n, i) => { positionMap[n.id] = i })
+      return nodes
+    }
+
+    // Sort by parent's position index, then by id as tiebreaker
+    const sorted = nodes.slice().sort((a, b) => {
+      const pa = positionMap[a.reportsTo] ?? 999
+      const pb = positionMap[b.reportsTo] ?? 999
+      return pa !== pb ? pa - pb : a.id - b.id
+    })
+
+    sorted.forEach((n, i) => { positionMap[n.id] = i })
+    return sorted
+  })
 })
 
-/* DOM refs per node id */
+/* DOM refs */
 const containerRef = ref(null)
 const nodeRefs = {}
 const lines = ref([])
@@ -82,7 +99,15 @@ const setRef = (id, el) => {
   if (el) nodeRefs[id] = el
 }
 
-/* Calculate SVG lines from actual DOM positions */
+/**
+ * Build elbow (L-shaped) SVG path between parent bottom-center
+ * and child top-center, with a midpoint horizontal segment.
+ */
+const elbowPath = (x1, y1, x2, y2) => {
+  const mid = (y1 + y2) / 2
+  return `M ${x1} ${y1} L ${x1} ${mid} L ${x2} ${mid} L ${x2} ${y2}`
+}
+
 const calculateLines = () => {
   nextTick(() => {
     const container = containerRef.value
@@ -102,10 +127,12 @@ const calculateLines = () => {
         const p = parentEl.getBoundingClientRect()
 
         return {
-          x1: p.left + p.width / 2 - rect.left,
-          y1: p.bottom - rect.top,
-          x2: c.left + c.width / 2 - rect.left,
-          y2: c.top - rect.top,
+          d: elbowPath(
+            p.left + p.width / 2 - rect.left,
+            p.bottom - rect.top,
+            c.left + c.width / 2 - rect.left,
+            c.top - rect.top,
+          ),
         }
       })
       .filter(Boolean)
@@ -115,7 +142,6 @@ const calculateLines = () => {
 onMounted(calculateLines)
 watch(() => props.nodes, calculateLines, { deep: true })
 
-/* Badge styles */
 const badgeClass = (pos) => ({
   'Director':          'badge--director',
   'General Manager':   'badge--gm',
@@ -136,7 +162,6 @@ const badgeClass = (pos) => ({
   min-width: max-content;
 }
 
-/* SVG overlay — sits behind cards */
 .org-svg {
   position: absolute;
   top: 0;
@@ -145,7 +170,6 @@ const badgeClass = (pos) => ({
   overflow: visible;
 }
 
-/* Each level row */
 .org-row {
   display: flex;
   gap: 24px;
@@ -154,7 +178,6 @@ const badgeClass = (pos) => ({
   z-index: 1;
 }
 
-/* Node card */
 .org-node {
   background: #fff;
   border: 1px solid #EBEBEB;
@@ -165,7 +188,6 @@ const badgeClass = (pos) => ({
   max-width: 160px;
 }
 
-/* Badges */
 .position-badge {
   display: inline-block;
   font-size: 10px;
