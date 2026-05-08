@@ -35,16 +35,7 @@
         Showing senior leadership only: Director, General Manager, Executive Manager, Manager, Supervisor.
       </p>
       <div class="overflow-x-auto pb-8">
-        <div class="flex justify-center min-w-max px-8">
-          <OrgNode
-            v-if="rootNode"
-            :node="rootNode"
-            :all-nodes="globalStaff"
-          />
-          <div v-else class="text-center py-16">
-            <p class="text-sm text-ink3">No org structure data found.</p>
-          </div>
-        </div>
+        <OrgTree :nodes="globalStaff" />
       </div>
     </div>
 
@@ -161,7 +152,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import OrgNode from '../components/OrgNode.vue'
+import OrgTree from '../components/OrgTree.vue'
 import orgData from '../data/org.json'
 
 /* State */
