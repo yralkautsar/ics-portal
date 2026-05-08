@@ -1,7 +1,6 @@
 <template>
   <div class="node-wrapper">
 
-    <!-- Card -->
     <div :class="['node-card', isRoot ? 'node-card--root' : '']">
       <span :class="['position-badge', positionClass(node.position)]">
         {{ node.position }}
@@ -10,12 +9,13 @@
       <p class="node-dept">{{ node.department }}</p>
     </div>
 
-    <!-- Children -->
     <div v-if="children.length" class="children-section">
-      <div class="connector-down"></div>
+      <!-- vertical line from parent down to horizontal bar -->
+      <div class="connector-v"></div>
       <div class="children-row">
         <div v-for="child in children" :key="child.id" class="child-col">
-          <div class="connector-down"></div>
+          <!-- vertical line from horizontal bar down to child card -->
+          <div class="connector-v"></div>
           <OrgNode :node="child" :all-nodes="allNodes" />
         </div>
       </div>
@@ -33,17 +33,14 @@ const props = defineProps({
 })
 
 const isRoot = computed(() => props.node.reportsTo === null)
-
-const children = computed(() =>
-  props.allNodes.filter(n => n.reportsTo === props.node.id)
-)
+const children = computed(() => props.allNodes.filter(n => n.reportsTo === props.node.id))
 
 const positionClass = (pos) => ({
-  'Director': 'badge--director',
-  'General Manager': 'badge--gm',
-  'Executive Manager': 'badge--em',
-  'Manager': 'badge--manager',
-  'Supervisor': 'badge--supervisor',
+  'Director':         'badge--director',
+  'General Manager':  'badge--gm',
+  'Executive Manager':'badge--em',
+  'Manager':          'badge--manager',
+  'Supervisor':       'badge--supervisor',
 }[pos] || 'badge--supervisor')
 </script>
 
@@ -63,13 +60,15 @@ const positionClass = (pos) => ({
   text-align: center;
   min-width: 140px;
   max-width: 160px;
+  position: relative;
+  z-index: 1;
 }
 
 .node-card--root {
   border-color: #E8630A;
 }
 
-/* Position badge */
+/* Badges */
 .position-badge {
   display: inline-block;
   font-size: 10px;
@@ -81,11 +80,11 @@ const positionClass = (pos) => ({
   margin-bottom: 8px;
 }
 
-.badge--director  { background: #1A1A1A; color: #fff; }
-.badge--gm        { background: #4A4A4A; color: #fff; }
-.badge--em        { background: #E8630A; color: #fff; }
-.badge--manager   { background: #FFF5EF; color: #E8630A; }
-.badge--supervisor{ background: #F8F8F8; color: #888; }
+.badge--director   { background: #1A1A1A; color: #fff; }
+.badge--gm         { background: #4A4A4A; color: #fff; }
+.badge--em         { background: #E8630A; color: #fff; }
+.badge--manager    { background: #FFF5EF; color: #E8630A; }
+.badge--supervisor { background: #F8F8F8; color: #888; }
 
 .node-name {
   font-family: 'Montserrat', sans-serif;
@@ -101,11 +100,11 @@ const positionClass = (pos) => ({
   margin-top: 2px;
 }
 
-/* Connectors */
-.connector-down {
+/* Vertical connector */
+.connector-v {
   width: 1px;
   height: 24px;
-  background: #888;
+  background: #888888;
   flex-shrink: 0;
 }
 
@@ -119,36 +118,40 @@ const positionClass = (pos) => ({
 .children-row {
   display: flex;
   align-items: flex-start;
-  position: relative;
 }
 
-/* Horizontal line across all siblings via border-top on child-col */
+/* Each child column — ::before draws the horizontal bar */
 .child-col {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 20px;
-  border-top: 1px solid #888;
+  position: relative;
 }
 
-/* First child: line starts from center, goes right */
-.child-col:first-child {
-  border-left: none;
-  padding-left: 0;
+/* Horizontal connector via ::before */
+.child-col::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #888888;
 }
 
-.child-col:first-child {
-  border-top-left-radius: 0;
+/* First child: line starts at center, goes right */
+.child-col:first-child::before {
+  left: 50%;
 }
 
-/* Last child: line starts from left, ends at center */
-.child-col:last-child {
-  border-right: none;
-  padding-right: 0;
+/* Last child: line starts at left, ends at center */
+.child-col:last-child::before {
+  right: 50%;
 }
 
 /* Single child: no horizontal line needed */
-.child-col:first-child:last-child {
-  border-top: none;
+.child-col:first-child:last-child::before {
+  display: none;
 }
 </style>
