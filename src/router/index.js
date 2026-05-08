@@ -7,6 +7,7 @@ import SOPs from '../pages/SOPs.vue'
 import ProductCatalog from '../pages/ProductCatalog.vue'
 import SalesMaterials from '../pages/SalesMaterials.vue'
 import ImageGallery from '../pages/ImageGallery.vue'
+import OrgStructure from '../pages/OrgStructure.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -17,6 +18,7 @@ const routes = [
   { path: '/products', component: ProductCatalog },
   { path: '/sales', component: SalesMaterials },
   { path: '/gallery', component: ImageGallery },
+  { path: '/org', component: OrgStructure },
 ]
 
 export default createRouter({

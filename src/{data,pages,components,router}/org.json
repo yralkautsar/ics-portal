@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Marcus Hoffmann",
+    "position": "Director",
+    "department": "Executive",
+    "email": "marcus@icstravelgroup.com",
+    "country": "Global",
+    "reportsTo": null
+  },
+  {
+    "id": 2,
+    "name": "Claire Dubois",
+    "position": "General Manager",
+    "department": "Executive",
+    "email": "claire@icstravelgroup.com",
+    "country": "Global",
+    "reportsTo": 1
+  },
+  {
+    "id": 3,
+    "name": "Hendra Gunawan",
+    "position": "Executive Manager",
+    "department": "Operations",
+    "email": "hendra@icstravelgroup.com",
+    "country": "Indonesia",
+    "reportsTo": 2
+  },
+  {
+    "id": 4,
+    "name": "Thi Bich Ngoc",
+    "position": "Executive Manager",
+    "department": "Operations",
+    "email": "ngoc@icstravelgroup.com",
+    "country": "Vietnam",
+    "reportsTo": 2
+  },
+  {
+    "id": 5,
+    "name": "Yoga Rizky",
+    "position": "Supervisor",
+    "department": "IT",
+    "email": "yoga@icstravelgroup.com",
+    "country": "Indonesia",
+    "reportsTo": 1
+  },
+  {
+    "id": 6,
+    "name": "Fajar Nugroho",
+    "position": "Manager",
+    "department": "Sales",
+    "email": "fajar@icstravelgroup.com",
+    "country": "Indonesia",
+    "reportsTo": 3
+  },
+  {
+    "id": 7,
+    "name": "Sari Indrawati",
+    "position": "Manager",
+    "department": "HR",
+    "email": "sari@icstravelgroup.com",
+    "country": "Indonesia",
+    "reportsTo": 3
+  },
+  {
+    "id": 8,
+    "name": "Quoc Bao Tran",
+    "position": "Manager",
+    "department": "Sales",
+    "email": "bao@icstravelgroup.com",
+    "country": "Vietnam",
+    "reportsTo": 4
+  },
+  {
+    "id": 9,
+    "name": "Phuong Thao Le",
+    "position": "Supervisor",
+    "department": "Operations",
+    "email": "thao@icstravelgroup.com",
+    "country": "Vietnam",
+    "reportsTo": 4
+  },
+  {
+    "id": 10,
+    "name": "Rizal Firmansyah",
+    "position": "Supervisor",
+    "department": "Sales",
+    "email": "rizal@icstravelgroup.com",
+    "country": "Indonesia",
+    "reportsTo": 6
+  },
+  {
+    "id": 11,
+    "name": "Nadia Pertiwi",
+    "position": "Supervisor",
+    "department": "HR",
+    "email": "nadia@icstravelgroup.com",
+    "country": "Indonesia",
+    "reportsTo": 7
+  },
+  {
+    "id": 12,
+    "name": "Minh Chau Nguyen",
+    "position": "Supervisor",
+    "department": "Sales",
+    "email": "chau@icstravelgroup.com",
+    "country": "Vietnam",
+    "reportsTo": 8
+  }
+]
