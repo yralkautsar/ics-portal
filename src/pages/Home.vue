@@ -1,79 +1,77 @@
 <template>
   <div>
-    <!-- Hero — editorial style -->
-    <div class="bg-white border-b border-gray-100 px-8 py-12">
-      <div class="max-w-7xl mx-auto flex items-end justify-between">
-        <div>
-          <p class="text-xs font-semibold tracking-widest uppercase text-ink3 mb-4">ICS TravelGroup</p>
-          <h1 class="font-heading font-800 text-4xl text-ink leading-tight mb-3">Internal Portal</h1>
-          <p class="text-sm text-ink3 max-w-md leading-relaxed">
-            Central hub for company files, announcements, SOPs, and internal resources across all countries.
-          </p>
-        </div>
-        <div class="flex gap-8 text-right">
-          <div>
-            <p class="text-3xl font-heading font-700 text-ink">3</p>
-            <p class="text-xs text-ink3 mt-1 tracking-wider uppercase">Countries</p>
-          </div>
-          <div class="w-px bg-gray-100"></div>
-          <div>
-            <p class="text-3xl font-heading font-700 text-ink">{{ announcements.length }}</p>
-            <p class="text-xs text-ink3 mt-1 tracking-wider uppercase">Announcements</p>
-          </div>
-          <div class="w-px bg-gray-100"></div>
-          <div>
-            <p class="text-3xl font-heading font-700 text-ink">91</p>
-            <p class="text-xs text-ink3 mt-1 tracking-wider uppercase">Total Files</p>
-          </div>
-        </div>
+
+    <!-- Welcome -->
+    <div class="bg-white border-b border-gray-100 px-8 py-10">
+      <div class="max-w-7xl mx-auto">
+        <p class="text-xs font-semibold tracking-widest uppercase text-ink3 mb-3">
+          ICS TravelGroup · Internal Portal · {{ today }}
+        </p>
+        <h1 class="font-heading font-800 text-3xl text-ink leading-tight mb-2">
+          Welcome back, Yoga.
+        </h1>
+        <p class="text-sm text-ink3 max-w-lg leading-relaxed">
+          Here's what's happening across the company.
+        </p>
       </div>
     </div>
 
+    <!-- Content -->
     <div class="max-w-7xl mx-auto px-8 py-8 grid grid-cols-3 gap-8">
-      <div class="col-span-2 space-y-8">
 
-        <!-- Quick Access -->
-        <div>
-          <p class="text-xs font-semibold tracking-widest uppercase text-ink3 mb-4">Quick Access</p>
-          <div class="grid grid-cols-4 gap-3">
-            <router-link
-              v-for="item in quickLinks"
-              :key="item.path"
-              :to="item.path"
-              class="bg-white border border-gray-100 rounded-lg p-4 text-center hover:border-ink hover:shadow-sm transition-all group"
-            >
-              <p class="text-xs font-semibold text-ink2 group-hover:text-ink transition-colors tracking-wide">{{ item.label }}</p>
-            </router-link>
-          </div>
+      <!-- Main: Announcements Feed -->
+      <div class="col-span-2">
+        <div class="flex items-center justify-between mb-4">
+          <p class="text-xs font-semibold tracking-widest uppercase text-ink3">Announcements</p>
+          <router-link
+            to="/announcements"
+            class="text-xs text-ink3 hover:text-ink font-medium hover:underline"
+          >
+            Add new
+          </router-link>
         </div>
 
-        <!-- Latest Announcements -->
-        <div>
-          <div class="flex items-center justify-between mb-4">
-            <p class="text-xs font-semibold tracking-widest uppercase text-ink3">Latest Announcements</p>
-            <router-link to="/announcements" class="text-xs text-ink3 hover:text-ink font-medium hover:underline">View all</router-link>
-          </div>
-          <div class="space-y-3">
-            <div
-              v-for="ann in announcements.slice(0, 3)"
-              :key="ann.id"
-              class="bg-white border border-gray-100 rounded-lg p-4 hover:border-gray-300 hover:shadow-sm transition-all cursor-pointer"
-              @click="$router.push('/announcements')"
-            >
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <span :class="['text-xs font-semibold tracking-widest uppercase px-2 py-0.5 rounded mb-2 inline-block', categoryTag(ann.category)]">
-                    {{ ann.category }}
-                  </span>
-                  <p class="font-heading font-600 text-sm text-ink">{{ ann.title }}</p>
-                  <p class="text-xs text-ink3 mt-1">{{ ann.postedBy }} · {{ formatDate(ann.date) }}</p>
-                </div>
-                <span class="text-xs text-ink3 whitespace-nowrap mt-1">{{ ann.country }}</span>
+        <!-- Filter -->
+        <div class="flex gap-2 mb-5">
+          <button
+            v-for="cat in ['All', 'Company', 'Operations', 'HR', 'IT']"
+            :key="cat"
+            @click="filter = cat"
+            :class="[
+              'px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors',
+              filter === cat
+                ? 'bg-ink text-white'
+                : 'bg-white text-ink2 border border-gray-100 hover:border-gray-300'
+            ]"
+          >
+            {{ cat }}
+          </button>
+        </div>
+
+        <div class="space-y-3">
+          <div
+            v-for="ann in filtered"
+            :key="ann.id"
+            class="bg-white border border-gray-100 rounded-lg p-5 hover:border-gray-300 hover:shadow-sm transition-all cursor-pointer"
+            @click="$router.push('/announcements')"
+          >
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex-1">
+                <span :class="['text-xs font-semibold tracking-widest uppercase px-2 py-0.5 rounded mb-2 inline-block', categoryTag(ann.category)]">
+                  {{ ann.category }}
+                </span>
+                <p class="font-heading font-600 text-sm text-ink">{{ ann.title }}</p>
+                <p class="text-sm text-ink3 mt-1 leading-relaxed">{{ ann.summary }}</p>
+                <p class="text-xs text-ink3 mt-2">{{ ann.postedBy }} · {{ formatDate(ann.date) }}</p>
               </div>
+              <span class="text-xs text-ink3 whitespace-nowrap mt-1">{{ ann.country }}</span>
             </div>
           </div>
-        </div>
 
+          <div v-if="filtered.length === 0" class="bg-white border border-gray-100 rounded-lg p-10 text-center">
+            <p class="text-sm text-ink3">No announcements found.</p>
+          </div>
+        </div>
       </div>
 
       <!-- Sidebar -->
@@ -86,7 +84,7 @@
             <div
               v-for="country in countries"
               :key="country.code"
-              class="flex items-center justify-between py-2.5 border-b border-gray-50 last:border-0 cursor-pointer hover:text-ink transition-colors group"
+              class="flex items-center justify-between py-2.5 border-b border-gray-50 last:border-0 cursor-pointer group"
               @click="$router.push('/files')"
             >
               <div>
@@ -118,23 +116,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import announcementsData from '../data/announcements.json'
 
 const announcements = ref(
   JSON.parse(localStorage.getItem('announcements') || JSON.stringify(announcementsData))
 )
 
-const quickLinks = [
-  { path: '/files', label: 'File Library' },
-  { path: '/sops', label: 'SOPs' },
-  { path: '/gallery', label: 'Brand Assets' },
-  { path: '/it-guide', label: 'IT Guide' },
-  { path: '/sales', label: 'Sales Materials' },
-  { path: '/products', label: 'Product Catalog' },
-  { path: '/gallery', label: 'Image Gallery' },
-  { path: '/announcements', label: 'Announcements' },
-]
+const filter = ref('All')
+
+const filtered = computed(() =>
+  filter.value === 'All'
+    ? announcements.value
+    : announcements.value.filter(a => a.category === filter.value)
+)
+
+/* Today's date — editorial format */
+const today = new Date().toLocaleDateString('en-GB', {
+  weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+})
 
 const countries = [
   { code: 'ID', name: 'Indonesia', sub: 'ICS HQ · Bali', fileCount: 42 },
@@ -155,5 +155,6 @@ const categoryTag = (cat) => ({
   IT: 'bg-gray-100 text-ink3',
 }[cat] || 'bg-gray-100 text-ink3')
 
-const formatDate = (d) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+const formatDate = (d) =>
+  new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
 </script>
