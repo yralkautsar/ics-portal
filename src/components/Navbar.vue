@@ -87,7 +87,7 @@ const groups = [
     label: 'Company',
     items: [
       { path: '/announcements', label: 'Announcements' },
-      { path: '/org', label: 'Org Structure' },
+      { path: '/org', label: 'Structure' },
     ],
   },
   {
